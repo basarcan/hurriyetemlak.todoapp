@@ -19,7 +19,6 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc _mMockMvc;
-    private MockMvc mockMvc;
 
     @MockBean
     private SignUpService _mSignUpService;
