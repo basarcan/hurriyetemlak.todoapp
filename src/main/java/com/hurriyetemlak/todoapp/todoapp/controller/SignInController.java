@@ -1,5 +1,6 @@
 package com.hurriyetemlak.todoapp.todoapp.controller;
 
+import com.hurriyetemlak.todoapp.todoapp.exception.exceptions.PasswordDoesNotExistException;
 import com.hurriyetemlak.todoapp.todoapp.model.request.SignInRequest;
 import com.hurriyetemlak.todoapp.todoapp.model.response.SignInResponse;
 import com.hurriyetemlak.todoapp.todoapp.service.SignInService;
@@ -18,8 +19,7 @@ public class SignInController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public SignInResponse signIn(@RequestBody  SignInRequest signInRequest)
-    {
+    public SignInResponse signIn(@RequestBody  SignInRequest signInRequest) throws PasswordDoesNotExistException {
         return signInService.signIn(signInRequest);
     }
 

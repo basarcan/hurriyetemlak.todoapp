@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SignInRepository {
 
-    public User search(String email, String encyptedPassword) {
+    public User search(String email, String encryptedPassword) {
         return null;
     }
 }
