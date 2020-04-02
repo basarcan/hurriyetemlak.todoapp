@@ -18,9 +18,8 @@ public class TokenService {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", user.getEmail());
-        claims.put("id", user.getId());
         DateTime expirationDate = DateTime.now().plusDays(1);
-        return jwtTokenGeneratorService.generateToken(claims,expirationDate);
+        return jwtTokenGeneratorService.generateToken(claims,expirationDate).compact();
 
     }
 }

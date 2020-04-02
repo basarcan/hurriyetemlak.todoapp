@@ -5,7 +5,7 @@ import com.hurriyetemlak.todoapp.todoapp.exception.exceptions.EmailDoesNotValidE
 import com.hurriyetemlak.todoapp.todoapp.exception.exceptions.PasswordDoesNotExistException;
 import com.hurriyetemlak.todoapp.todoapp.model.request.SignInRequest;
 import com.hurriyetemlak.todoapp.todoapp.model.response.SignInResponse;
-import com.hurriyetemlak.todoapp.todoapp.repository.SignInRepository;
+import com.hurriyetemlak.todoapp.todoapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import static com.hurriyetemlak.todoapp.todoapp.utils.EmailValidation.isValidEmail;
@@ -14,15 +14,14 @@ import static com.hurriyetemlak.todoapp.todoapp.utils.EmailValidation.isValidEma
 public class SignInService {
 
     private final EncryptionService encryptionService;
-    private final SignInRepository signInRepository;
+    private final UserRepository userRepository;
     private final TokenService tokenService;
 
-    public SignInService(EncryptionService encryptionService, SignInRepository signInRepository, TokenService tokenService) {
+    public SignInService(EncryptionService encryptionService, UserRepository userRepository, TokenService tokenService) {
         this.encryptionService = encryptionService;
-        this.signInRepository = signInRepository;
+        this.userRepository = userRepository;
         this.tokenService = tokenService;
     }
-
 
     public SignInResponse signIn(SignInRequest signInRequest) throws RuntimeException {
         if (!isValidEmail(signInRequest.getEmail())) {
@@ -30,7 +29,7 @@ public class SignInService {
         }
 
         String encryptedPassword = encryptionService.encodeData(signInRequest.getPassword());
-        User user = signInRepository.search(signInRequest.getEmail(), encryptedPassword);
+        User user = userRepository.signIn(signInRequest.getEmail(), encryptedPassword);
         if (user == null) {
             return null;
         } else if (user.getEmail() != null && user.getPassword() == null) {

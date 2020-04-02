@@ -1,29 +1,32 @@
 package com.hurriyetemlak.todoapp.todoapp.service;
 
-import com.hurriyetemlak.todoapp.todoapp.configuration.JwtConfiguration;
+import com.hurriyetemlak.todoapp.todoapp.configuration.JwtSecurityTokenConfig;
 import io.jsonwebtoken.CompressionCodecs;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Service
+@Component
 public class JwtTokenGeneratorService {
 
-    private final JwtConfiguration jwtConfiguration;
+    private final JwtSecurityTokenConfig jwtSecurityTokenConfig;
 
-    public JwtTokenGeneratorService(JwtConfiguration jwtConfiguration) {
-        this.jwtConfiguration = jwtConfiguration;
+    public JwtTokenGeneratorService(JwtSecurityTokenConfig jwtSecurityTokenConfig) {
+        this.jwtSecurityTokenConfig = jwtSecurityTokenConfig;
     }
 
-    public String generateToken(Map<String, Object> claims, DateTime expirationDate) {
-        return Jwts.builder()
+    public JwtBuilder generateToken(Map<String, Object> claims, DateTime expirationDate) {
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .addClaims(claims)
                 .setExpiration(expirationDate.toDate())
                 .setIssuedAt(LocalDate.now().toDate())
                 .compressWith(CompressionCodecs.DEFLATE)
-                .signWith(SignatureAlgorithm.HS512, jwtConfiguration.getSecretKeySpec()).compact();    }
+                .signWith(SignatureAlgorithm.HS512, jwtSecurityTokenConfig.getSecretKeySpec());
+        return jwtBuilder;
+    }
 }

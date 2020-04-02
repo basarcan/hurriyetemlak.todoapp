@@ -31,10 +31,10 @@ public class TokenServiceTest {
         user.setLastName("lastName");
         user.setFirstName("firstName");
         user.setPassword("password");
-        user.setId(0L);
+        user.setId("0");
         user.setEmail("email@email.com");
 
-        given(jwtTokenGeneratorService.generateToken(any(HashMap.class), any(DateTime.class))).willReturn("token");
+        //given(jwtTokenGeneratorService.generateToken(any(HashMap.class), any(DateTime.class))).willReturn("token");
 
 
         //when

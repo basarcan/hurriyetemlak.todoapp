@@ -5,7 +5,7 @@ import com.hurriyetemlak.todoapp.todoapp.exception.exceptions.EmailDoesNotValidE
 import com.hurriyetemlak.todoapp.todoapp.exception.exceptions.PasswordDoesNotExistException;
 import com.hurriyetemlak.todoapp.todoapp.model.request.SignInRequest;
 import com.hurriyetemlak.todoapp.todoapp.model.response.SignInResponse;
-import com.hurriyetemlak.todoapp.todoapp.repository.SignInRepository;
+import com.hurriyetemlak.todoapp.todoapp.repository.UserRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -32,7 +32,7 @@ public class SignInServiceTest {
     private EncryptionService encryptionService;
 
     @Mock
-    private SignInRepository signInRepository;
+    private UserRepository userRepository;
 
     @Mock
     private TokenService tokenService;
@@ -49,7 +49,7 @@ public class SignInServiceTest {
         user.setLastName("lastName");
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(signInRepository.search(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
+        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
         given(tokenService.generateToken(user)).willReturn("token");
 
         //when
@@ -70,7 +70,7 @@ public class SignInServiceTest {
 
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(signInRepository.search(signInRequest.getEmail(),"encryptedPassword")).willReturn(null);
+        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(null);
 
         //when
         SignInResponse response = signInService.signIn(signInRequest);
@@ -94,7 +94,7 @@ public class SignInServiceTest {
 
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(signInRepository.search(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
+        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
 
         //when
         thrown.expect(PasswordDoesNotExistException.class);
@@ -119,7 +119,7 @@ public class SignInServiceTest {
         SignInResponse signInResponse = signInService.signIn(signInRequest);
 
         //then
-        verifyNoInteractions(signInRepository);
+        verifyNoInteractions(userRepository);
         verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
     }
 
@@ -136,7 +136,7 @@ public class SignInServiceTest {
         SignInResponse signInResponse = signInService.signIn(signInRequest);
 
         //then
-        verifyNoInteractions(signInRepository);
+        verifyNoInteractions(userRepository);
         verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
     }
 

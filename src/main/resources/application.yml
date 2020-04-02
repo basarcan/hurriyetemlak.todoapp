@@ -1,1 +1,21 @@
-token.secret.key : hemlak
+security:
+  token:
+    secret:
+      key: 123456
+spring:
+  application:
+    name: Hurriyet Emlak User Api
+  couchbase:
+    bootstrap-hosts: localhost
+    bucket:
+      name: user-bucket
+      password: user-bucket
+
+
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 1024
+

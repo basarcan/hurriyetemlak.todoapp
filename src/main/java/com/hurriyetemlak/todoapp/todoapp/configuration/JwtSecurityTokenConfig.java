@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Configuration
-@ConfigurationProperties("token.secret.key")
-public class JwtConfiguration {
+@ConfigurationProperties("security.token.secret")
+public class JwtSecurityTokenConfig {
     private String key;
 
     public String getKey() {
