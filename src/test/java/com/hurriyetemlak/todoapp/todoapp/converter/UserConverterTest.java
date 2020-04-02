@@ -1,7 +1,7 @@
 package com.hurriyetemlak.todoapp.todoapp.converter;
 
 import com.hurriyetemlak.todoapp.todoapp.domain.User;
-import com.hurriyetemlak.todoapp.todoapp.model.SignUpRequestModel;
+import com.hurriyetemlak.todoapp.todoapp.model.request.SignUpRequestModel;
 import com.hurriyetemlak.todoapp.todoapp.service.EncryptionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

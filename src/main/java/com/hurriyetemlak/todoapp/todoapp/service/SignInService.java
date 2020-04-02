@@ -15,12 +15,10 @@ public class SignInService {
 
     private final EncryptionService encryptionService;
     private final UserRepository userRepository;
-    private final TokenService tokenService;
 
-    public SignInService(EncryptionService encryptionService, UserRepository userRepository, TokenService tokenService) {
+    public SignInService(EncryptionService encryptionService, UserRepository userRepository) {
         this.encryptionService = encryptionService;
         this.userRepository = userRepository;
-        this.tokenService = tokenService;
     }
 
     public SignInResponse signIn(SignInRequest signInRequest) throws RuntimeException {
@@ -35,7 +33,9 @@ public class SignInService {
         } else if (user.getEmail() != null && user.getPassword() == null) {
             throw new PasswordDoesNotExistException("Girilen şifre yanlış");
         }
-        String token = tokenService.generateToken(user);
+        String token = encryptionService.generateToken();
+        user.setToken(token);
+        userRepository.update(user);
         SignInResponse signInResponse = new SignInResponse();
         signInResponse.setFirstName(user.getFirstName());
         signInResponse.setLastName(user.getLastName());

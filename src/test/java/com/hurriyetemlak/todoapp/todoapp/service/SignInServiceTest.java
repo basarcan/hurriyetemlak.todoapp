@@ -14,8 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verifyNoInteractions;
 
@@ -34,8 +33,6 @@ public class SignInServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
-    private TokenService tokenService;
 
     @Test
     public void it_should_sign_in() throws PasswordDoesNotExistException {
@@ -49,8 +46,8 @@ public class SignInServiceTest {
         user.setLastName("lastName");
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
-        given(tokenService.generateToken(user)).willReturn("token");
+        given(userRepository.signIn(signInRequest.getEmail(), "encryptedPassword")).willReturn(user);
+        given(encryptionService.generateToken()).willReturn("token");
 
         //when
         SignInResponse response = signInService.signIn(signInRequest);
@@ -70,13 +67,12 @@ public class SignInServiceTest {
 
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(null);
+        given(userRepository.signIn(signInRequest.getEmail(), "encryptedPassword")).willReturn(null);
 
         //when
         SignInResponse response = signInService.signIn(signInRequest);
 
         //then
-        verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
         assertThat(response).isNull();
     }
 
@@ -94,7 +90,7 @@ public class SignInServiceTest {
 
 
         given(encryptionService.encodeData(signInRequest.getPassword())).willReturn("encryptedPassword");
-        given(userRepository.signIn(signInRequest.getEmail(),"encryptedPassword")).willReturn(user);
+        given(userRepository.signIn(signInRequest.getEmail(), "encryptedPassword")).willReturn(user);
 
         //when
         thrown.expect(PasswordDoesNotExistException.class);
@@ -102,12 +98,11 @@ public class SignInServiceTest {
         SignInResponse response = signInService.signIn(signInRequest);
 
         //then
-         verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
+        verifyNoInteractions(encryptionService);//girmeyeceğini bildiğim yerler
     }
 
     @Test
-    public void it_should_return_exception_when_user_typed_without_at_sign_email_adress()
-    {
+    public void it_should_return_exception_when_user_typed_without_at_sign_email_adress() {
         //given
         SignInRequest signInRequest = new SignInRequest();
         signInRequest.setEmail("emailemail.com");
@@ -120,12 +115,11 @@ public class SignInServiceTest {
 
         //then
         verifyNoInteractions(userRepository);
-        verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
+        verifyNoInteractions(encryptionService);//girmeyeceğini bildiğim yerler
     }
 
     @Test
-    public void it_should_return_exception_when_user_typed_without_domain_email_adress()
-    {
+    public void it_should_return_exception_when_user_typed_without_domain_email_adress() {
         //given
         SignInRequest signInRequest = new SignInRequest();
         signInRequest.setPassword("password");
@@ -137,7 +131,7 @@ public class SignInServiceTest {
 
         //then
         verifyNoInteractions(userRepository);
-        verifyNoInteractions(tokenService);//girmeyeceğini bildiğim yerler
+        verifyNoInteractions(encryptionService);//girmeyeceğini bildiğim yerler
     }
 
 }

@@ -1,4 +1,4 @@
-package com.hurriyetemlak.todoapp.todoapp.model;
+package com.hurriyetemlak.todoapp.todoapp.model.request;
 
 import lombok.Getter;
 import lombok.Setter;

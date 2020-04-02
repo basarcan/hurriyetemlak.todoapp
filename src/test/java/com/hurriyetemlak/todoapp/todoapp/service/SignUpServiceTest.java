@@ -2,7 +2,7 @@ package com.hurriyetemlak.todoapp.todoapp.service;
 
 import com.hurriyetemlak.todoapp.todoapp.converter.SignUpConverter;
 import com.hurriyetemlak.todoapp.todoapp.domain.User;
-import com.hurriyetemlak.todoapp.todoapp.model.SignUpRequestModel;
+import com.hurriyetemlak.todoapp.todoapp.model.request.SignUpRequestModel;
 import com.hurriyetemlak.todoapp.todoapp.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

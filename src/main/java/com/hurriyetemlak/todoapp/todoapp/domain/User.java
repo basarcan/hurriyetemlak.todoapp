@@ -24,4 +24,5 @@ public class User {
     private String lastName;
     private Date createdDate;
     private Date lastModifiedDate;
+    private String token;
 }

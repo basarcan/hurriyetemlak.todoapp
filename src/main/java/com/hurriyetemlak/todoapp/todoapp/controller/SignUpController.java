@@ -1,6 +1,6 @@
 package com.hurriyetemlak.todoapp.todoapp.controller;
 
-import com.hurriyetemlak.todoapp.todoapp.model.SignUpRequestModel;
+import com.hurriyetemlak.todoapp.todoapp.model.request.SignUpRequestModel;
 import com.hurriyetemlak.todoapp.todoapp.service.SignUpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

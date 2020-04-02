@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hurriyetemlak.todoapp.todoapp.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.couchbase.core.CouchbaseTemplate;
-import org.springframework.data.couchbase.repository.support.N1qlCouchbaseRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -45,5 +44,17 @@ public class UserRepository {
             log.error("Could not parsed");
         }
         return null;
+    }
+
+    public User verifyToken(String token) {
+        String query = "SELECT meta(f).id, f.* FROM `user-bucket` AS f WHERE f.token= $token";
+        ParameterizedN1qlQuery parameterizedN1qlQuery = N1qlQuery.parameterized(query, JsonObject.create().put("token", token));
+        Stream<User> userStream = couchbaseTemplate.queryN1QL(parameterizedN1qlQuery).allRows().stream().map(this::map);
+        List<User> collect = userStream.collect(Collectors.toList());
+        return collect.get(0);
+    }
+
+    public void update(User user) {
+        couchbaseTemplate.update(user);
     }
 }
