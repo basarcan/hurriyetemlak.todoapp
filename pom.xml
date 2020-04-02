@@ -11,7 +11,7 @@
     <groupId>com.hurriyetemlak.todoapp</groupId>
     <artifactId>todoapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>todoapp</name>
+    <name>user-api</name>
     <description>Job Interview Task Todo List (HurriyetEmlak)</description>
 
     <properties>
