@@ -1,6 +1,6 @@
 FROM adoptopenjdk:11-jdk-openj9-bionic AS build-project
-ADD . ./userApi
-WORKDIR /userApi
+ADD . ./user-api
+WORKDIR /user-api
 RUN chmod +x mvnw
 RUN ./mvnw clean install -DskipTests
 
