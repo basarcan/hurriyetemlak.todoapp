@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hurriyetemlak.todoapp</groupId>
-    <artifactId>todoapp</artifactId>
+    <artifactId>user-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>user-api</name>
     <description>Job Interview Task Todo List (HurriyetEmlak)</description>
